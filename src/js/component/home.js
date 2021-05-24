@@ -19,9 +19,16 @@ export function Home() {
 	return (
 		<div>
 			<div>{songList}</div>
-			<nav className="navbar navbar-dark hud px-3 py-3">
-				Hola carambola
-			</nav>
+			<div>
+				<nav className="navbar navbar-dark hud">
+					<div className="text-white">
+						<i className="fas fa-caret-square-left"></i>
+						<i className="fas fa-pause-circle"></i>
+						<i className="fas fa-play"></i>
+						<i className="fas fa-caret-square-right"></i>
+					</div>
+				</nav>
+			</div>
 		</div>
 	);
 }
