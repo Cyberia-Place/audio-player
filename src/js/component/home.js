@@ -2,9 +2,10 @@ import React, { useState } from "react";
 
 //create your first component
 export function Home() {
-	const [barStyle, setbarStyle] = useState("navbar navbar-dark songbar");
-	let songs = [];
+	const [barStyle, setbarStyle] = useState("navbar navbar-dark songbar"); // Define el style de las barras de canciones
+	const [song, setSong] = useState("");
 
+	let songs = [];
 	for (let i = 0; i < 17; i++) {
 		songs.push("Mario Castle");
 	}
@@ -18,7 +19,10 @@ export function Home() {
 						? "navbar navbar-dark songbar-selected"
 						: "navbar navbar-dark songbar"
 				}
-				onClick={() => setbarStyle(index)}>
+				onClick={() => {
+					setbarStyle(index);
+					setSong(song[index]);
+				}}>
 				{index} - {element}
 			</nav>
 		);
