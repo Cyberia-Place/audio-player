@@ -4,6 +4,13 @@ import React, { useState } from "react";
 export function Home() {
 	const [barStyle, setbarStyle] = useState("navbar navbar-dark songbar"); // Define el style de las barras de canciones
 	const [song, setSong] = useState("");
+	const [button, setButton] = useState("fas fa-play");
+
+	const Click = index => {
+		setbarStyle(index);
+		setSong(song[index]);
+		setButton("fas fa-pause-circle");
+	};
 
 	let songs = [];
 	for (let i = 0; i < 17; i++) {
@@ -19,10 +26,7 @@ export function Home() {
 						? "navbar navbar-dark songbar-selected"
 						: "navbar navbar-dark songbar"
 				}
-				onClick={() => {
-					setbarStyle(index);
-					setSong(song[index]);
-				}}>
+				onClick={() => Click(index)}>
 				{index} - {element}
 			</nav>
 		);
@@ -34,8 +38,7 @@ export function Home() {
 			<nav className="navbar navbar-dark hud">
 				<div className="text-white">
 					<i className="fas fa-caret-square-left"></i>
-					<i className="fas fa-pause-circle"></i>
-					<i className="fas fa-play"></i>
+					<i className={button}></i>
 					<i className="fas fa-caret-square-right"></i>
 				</div>
 			</nav>
