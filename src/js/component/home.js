@@ -6,21 +6,24 @@ export function Home() {
 	const [song, setSong] = useState("");
 	const [button, setButton] = useState("fas fa-play");
 
-	const Click = index => {
+	const selectSong = index => {
 		setbarStyle(index);
-		console.log("barStyle: ", barStyle, "Index: ", index, "Song: ", song);
 		setSong(songList[index]);
 		if (button == "fas fa-play") {
 			setButton("fas fa-pause-circle");
-			console.log(button);
+		}
+	};
+
+	const buttonChanger = () => {
+		if (button == "fas fa-play") {
+			setButton("fas fa-pause-circle");
 		} else {
 			setButton("fas fa-play");
-			console.log(button);
 		}
 	};
 
 	let songList = [];
-	for (let i = 0; i < 17; i++) {
+	for (let div = 0; div < 17; div++) {
 		songList.push("Mario Castle");
 	}
 
@@ -33,7 +36,7 @@ export function Home() {
 						? "navbar navbar-dark songbar-selected"
 						: "navbar navbar-dark songbar"
 				}
-				onClick={() => Click(index)}>
+				onClick={() => selectSong(index)}>
 				{index} - {element}
 			</nav>
 		);
@@ -42,12 +45,12 @@ export function Home() {
 	return (
 		<div>
 			<div className="overflow-auto song-list">{songInterface}</div>
-			<nav className="navbar navbar-dark hud">
-				<div className="text-white">
-					<i className="fas fa-caret-square-left"></i>
-					<i className={button}></i>
-					<i className="fas fa-caret-square-right"></i>
-				</div>
+			<nav className="navbar navbar-dark hud d-flex justify-content-center">
+				<div className="fas fa-caret-square-left mx-5"></div>
+				<div
+					className={button + " " + "mx-5"}
+					onClick={() => buttonChanger()}></div>
+				<div className="fas fa-caret-square-right mx-5"></div>
 			</nav>
 		</div>
 	);
