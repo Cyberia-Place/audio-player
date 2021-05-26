@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 //create your first component
 export function Home() {
+	// JSON con los nombres de las canciones y sus archivos mp3
 	let songList = [
 		{
 			id: 1,
@@ -137,18 +138,23 @@ export function Home() {
 		}
 	];
 
-	const [barStyle, setbarStyle] = useState(""); // Define el style de las barras de canciones
-	const [song, setSong] = useState("");
-	const [button, setButton] = useState("fas fa-play");
+	let song = useRef(); // Variable para controlar la etiqueta de audio del html mediante el hook
 
+	const [barStyle, setbarStyle] = useState(""); // Define el style de las barras de canciones
+	const [button, setButton] = useState("fas fa-play"); // Define el boton de play/pausa
+
+	// Selecciona la canción que es clickeada, edita el bootstrap de su barra y cambia el botón
 	const selectSong = index => {
+		song.current.src =
+			"https://assets.breatheco.de/apis/sound/" + songList[index].url;
+		song.current.play();
 		setbarStyle(index);
-		setSong(songList[index].url);
 		if (button == "fas fa-play") {
 			setButton("fas fa-pause-circle");
 		}
 	};
 
+	// Permite pausar o reanudar la canción con el botón del hud
 	const buttonChanger = () => {
 		if (button == "fas fa-play") {
 			setButton("fas fa-pause-circle");
@@ -157,6 +163,7 @@ export function Home() {
 		}
 	};
 
+	// Crea la interfaz con la lista de canciones
 	const songInterface = songList.map((element, index) => {
 		return (
 			<nav
@@ -174,6 +181,7 @@ export function Home() {
 
 	return (
 		<div>
+			<audio ref={song} src="" />
 			<div className="overflow-auto song-list">{songInterface}</div>
 			<nav className="navbar navbar-dark hud d-flex justify-content-center">
 				<div className="fas fa-caret-square-left mx-5"></div>
