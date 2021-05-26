@@ -137,7 +137,7 @@ export function Home() {
 			url: "files/cartoons/songs/x-men.mp3"
 		}
 	];
-
+	let lastSongIndex = 0; // Almaceno el último index para ir alternando de canción con los botones de skip
 	let song = useRef(); // Variable para controlar la etiqueta de audio del html mediante el hook
 
 	const [barStyle, setbarStyle] = useState(""); // Define el style de las barras de canciones
@@ -145,12 +145,22 @@ export function Home() {
 
 	// Selecciona la canción que es clickeada, edita el bootstrap de su barra y cambia el botón
 	const selectSong = index => {
+		console.log("Primer call: ", lastSongIndex);
+		lastSongIndex = index;
+		console.log("Segundo call: ", lastSongIndex);
 		song.current.src =
 			"https://assets.breatheco.de/apis/sound/" + songList[index].url;
 		song.current.play();
 		setbarStyle(index);
-		if (button == "fas fa-play") {
-			setButton("fas fa-pause-circle");
+		buttonChanger();
+	};
+
+	// Selecciona la canción dependiendo del botón clickeado usando el valor del último index en lastSongIndex
+	const skipButtons = order => {
+		if (order == "go back") {
+			selectSong(lastSongIndex - 1);
+		} else {
+			selectSong(lastSongIndex + 1);
 		}
 	};
 
@@ -158,8 +168,10 @@ export function Home() {
 	const buttonChanger = () => {
 		if (button == "fas fa-play") {
 			setButton("fas fa-pause-circle");
+			song.current.play();
 		} else {
 			setButton("fas fa-play");
+			song.current.pause();
 		}
 	};
 
@@ -184,11 +196,15 @@ export function Home() {
 			<audio ref={song} src="" />
 			<div className="overflow-auto song-list">{songInterface}</div>
 			<nav className="navbar navbar-dark hud d-flex justify-content-center">
-				<div className="fas fa-caret-square-left mx-5"></div>
+				<div
+					className="fas fa-caret-square-left mx-5"
+					onClick={() => skipButtons("go back")}></div>
 				<div
 					className={button + " " + "mx-5"}
 					onClick={() => buttonChanger()}></div>
-				<div className="fas fa-caret-square-right mx-5"></div>
+				<div
+					className="fas fa-caret-square-right mx-5"
+					onClick={() => skipButtons("advance")}></div>
 			</nav>
 		</div>
 	);
