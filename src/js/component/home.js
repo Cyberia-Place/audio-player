@@ -8,16 +8,23 @@ export function Home() {
 
 	const Click = index => {
 		setbarStyle(index);
-		setSong(song[index]);
-		setButton("fas fa-pause-circle");
+		console.log("barStyle: ", barStyle, "Index: ", index, "Song: ", song);
+		setSong(songList[index]);
+		if (button == "fas fa-play") {
+			setButton("fas fa-pause-circle");
+			console.log(button);
+		} else {
+			setButton("fas fa-play");
+			console.log(button);
+		}
 	};
 
-	let songs = [];
+	let songList = [];
 	for (let i = 0; i < 17; i++) {
-		songs.push("Mario Castle");
+		songList.push("Mario Castle");
 	}
 
-	const songList = songs.map((element, index) => {
+	const songInterface = songList.map((element, index) => {
 		return (
 			<nav
 				key={index}
@@ -34,7 +41,7 @@ export function Home() {
 
 	return (
 		<div>
-			<div className="overflow-auto song-list">{songList}</div>
+			<div className="overflow-auto song-list">{songInterface}</div>
 			<nav className="navbar navbar-dark hud">
 				<div className="text-white">
 					<i className="fas fa-caret-square-left"></i>
