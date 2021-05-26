@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 
+let lastSongIndex = 0; // Almaceno el último index para ir alternando de canción con los botones de skip
+
 //create your first component
 export function Home() {
 	// JSON con los nombres de las canciones y sus archivos mp3
@@ -137,7 +139,6 @@ export function Home() {
 			url: "files/cartoons/songs/x-men.mp3"
 		}
 	];
-	let lastSongIndex = 0; // Almaceno el último index para ir alternando de canción con los botones de skip
 	let song = useRef(); // Variable para controlar la etiqueta de audio del html mediante el hook
 
 	const [barStyle, setbarStyle] = useState(""); // Define el style de las barras de canciones
@@ -145,14 +146,14 @@ export function Home() {
 
 	// Selecciona la canción que es clickeada, edita el bootstrap de su barra y cambia el botón
 	const selectSong = index => {
-		console.log("Primer call: ", lastSongIndex);
 		lastSongIndex = index;
-		console.log("Segundo call: ", lastSongIndex);
 		song.current.src =
 			"https://assets.breatheco.de/apis/sound/" + songList[index].url;
-		song.current.play();
 		setbarStyle(index);
-		buttonChanger();
+		if (button == "fas fa-play") {
+			setButton("fas fa-pause-circle");
+		}
+		song.current.play();
 	};
 
 	// Selecciona la canción dependiendo del botón clickeado usando el valor del último index en lastSongIndex
